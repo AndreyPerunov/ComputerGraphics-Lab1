@@ -6,7 +6,7 @@
 
 ## Preview
 
-Checkout public deployed website.
+Checkout public [deployed website](https://computer-graphics-lab1.vercel.app/).
 
 <img width="1653" height="850" alt="image" src="https://github.com/user-attachments/assets/75563265-e49f-45c2-ad60-383d313840a0" />
 
