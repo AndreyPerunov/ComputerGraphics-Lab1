@@ -8,12 +8,12 @@ import { StarShape } from "./StarShape"
 import { DragPan } from "./DragPan"
 
 const initialShapes = [
-  { id: "star1", type: "star", position: [1, 1, 0] as [number, number, number], rotation: 0, color: "yellow" },
-  { id: "star2", type: "star", position: [-1, 1, 0] as [number, number, number], rotation: 0, color: "yellow" },
-  { id: "sphere", type: "sphere", position: [0, 0, 0] as [number, number, number], rotation: 0, color: "red" },
-  { id: "square1", type: "square", position: [-1.1, -1, 0] as [number, number, number], rotation: 0, color: "blue" },
-  { id: "square2", type: "square", position: [0, -1, 0] as [number, number, number], rotation: 0, color: "blue" },
-  { id: "square3", type: "square", position: [1.1, -1, 0] as [number, number, number], rotation: 0, color: "blue" }
+  { id: "star1", type: "star", position: [1, 1, 0] as [number, number, number], rotation: 0, scale: 1, color: "yellow" },
+  { id: "star2", type: "star", position: [-1, 1, 0] as [number, number, number], rotation: 0, scale: 1, color: "yellow" },
+  { id: "sphere", type: "sphere", position: [0, 0, 0] as [number, number, number], rotation: 0, scale: 1, color: "red" },
+  { id: "square1", type: "square", position: [-1.1, -1, 0] as [number, number, number], rotation: 0, scale: 1, color: "blue" },
+  { id: "square2", type: "square", position: [0, -1, 0] as [number, number, number], rotation: 0, scale: 1, color: "blue" },
+  { id: "square3", type: "square", position: [1.1, -1, 0] as [number, number, number], rotation: 0, scale: 1, color: "blue" }
 ]
 
 export const Scene2D = () => {
@@ -39,6 +39,9 @@ export const Scene2D = () => {
 
           if (e.key === "q" || e.key === "Q") return { ...shape, rotation: shape.rotation - Math.PI / 36 } // CCW
           if (e.key === "e" || e.key === "E") return { ...shape, rotation: shape.rotation + Math.PI / 36 } // CW
+
+          if (e.key === "+" || e.key === "=") return { ...shape, scale: shape.scale * 1.1 }
+          if (e.key === "-" || e.key === "_") return { ...shape, scale: shape.scale * 0.9 }
 
           return shape
         })
@@ -81,8 +84,12 @@ export const Scene2D = () => {
             Press <code className="font-mono text-cyan-200">Q</code> and <code className="font-mono text-cyan-200">E</code> to rotate objects.
           </p>
         </div>
+        <div>
+          <p className="text-sm text-gray-400">
+            Press <code className="font-mono text-cyan-200">+</code> and <code className="font-mono text-cyan-200">-</code> to scale objects.
+          </p>
+        </div>
       </div>
-
       <Canvas orthographic camera={{ zoom: 50, position: [0, 0, 10] }}>
         <CameraUpdater zoom={zoom} />
         <DragPan />
@@ -104,7 +111,7 @@ function CameraUpdater({ zoom }: { zoom: number }) {
   return null
 }
 
-function Scene({ shapes, selectedId, onSelect }: { shapes: { id: string; type: string; position: [number, number, number]; rotation: number; color: string }[]; selectedId: string | null; onSelect: (id: string) => void }) {
+function Scene({ shapes, selectedId, onSelect }: { shapes: { id: string; type: string; position: [number, number, number]; rotation: number; scale: number; color: string }[]; selectedId: string | null; onSelect: (id: string) => void }) {
   return (
     <>
       {shapes.map(shape => (
@@ -114,13 +121,13 @@ function Scene({ shapes, selectedId, onSelect }: { shapes: { id: string; type: s
   )
 }
 
-function Figure({ shape, selected, onSelect }: { shape: { id: string; type: string; position: [number, number, number]; rotation: number; color: string }; selected: boolean; onSelect: () => void }) {
+function Figure({ shape, selected, onSelect }: { shape: { id: string; type: string; position: [number, number, number]; rotation: number; scale: number; color: string }; selected: boolean; onSelect: () => void }) {
   const { type, position } = shape
 
   const outlineSize = type === "sphere" ? 0.8 : type === "square" ? 1.2 : type === "star" ? 1.4 : 1
 
   return (
-    <group position={position} rotation={[0, 0, shape.rotation]} onClick={onSelect}>
+    <group position={position} rotation={[0, 0, shape.rotation]} scale={[shape.scale, shape.scale, 1]} onClick={onSelect}>
       {selected && <SelectionOutline size={outlineSize} />}
 
       {type === "sphere" && (
