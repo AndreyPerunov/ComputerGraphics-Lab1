@@ -10,6 +10,31 @@ Checkout public [deployed website](https://computer-graphics-lab1.vercel.app/).
 
 <img width="1653" height="850" alt="image" src="https://github.com/user-attachments/assets/75563265-e49f-45c2-ad60-383d313840a0" />
 
+## Installation
+
+### Prerequisites
+
+- Node.js 18+
+
+### Clone the Repository
+
+```sh
+git clone https://github.com/AndreyPerunov/ComputerGraphics-Lab1
+cd ComputerGraphics-Lab1
+```
+
+### Install Dependencies
+
+```sh
+npm install
+```
+
+### Start the Server
+
+```sh
+npm run dev
+```
+
 ## Tech Stack
 
 - [TypeScript](https://www.typescriptlang.org/) - Language
